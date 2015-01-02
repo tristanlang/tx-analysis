@@ -25,7 +25,7 @@ fs.readFile(filename, function (err, data) {
 });
 
 
-function processTx (i, txes, db, callback) {
+function processTx (i, txes, db, runAgain) {
   if (i == txes.length) {
     db.close();
   }
@@ -38,7 +38,7 @@ function processTx (i, txes, db, callback) {
         if (findType == 'unconfirmed' && results.length == 0 && tx.length != 0) console.log(tx);
         if (findType == 'confirmed' && results.length != 0 && tx.length != 0) console.log(tx);
         
-        callback(i+1, txes, db, callback);
+        runAgain(i+1, txes, db, runAgain);
       });
     });
   }
